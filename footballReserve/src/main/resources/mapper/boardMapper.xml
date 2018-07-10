@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boardMapper">
+
+	<resultMap type="userDTO" id="userDTO">
+		<id column="user_id" property="userId" />
+		<result column="user_pwd" property="userPwd" />
+		<result column="user_Name" property="userName" />
+		<result column="user_Email" property="userEmail" />
+		<result column="user_Phone" property="userPhone" />
+		<result column="user_dt" property="userDt" />
+		<result column="user_Authority" property="userAuthority" />
+		<result column="user_point" property="userPoint" />
+		<result column="user_usage" property="userUsage" />
+		<result column="user_grade" property="userGrade" />
+	</resultMap>
+
+	<resultMap type="boardDTO" id="boardDTO">
+		<id column="board_no" property="boardNo" />
+		<result column="board_type" property="boardType" />
+		<result column="user_id" property="userId" />
+		<result column="board_sub" property="boardSub" />
+		<result column="board_content" property="boardContent" />
+		<result column="board_dt" property="boardDt" />
+		<result column="board_hit" property="boardHit" />
+	</resultMap>
+
+	<resultMap type="reviewDTO" id="reviewDTO">
+		<id column="review_no" property="reviewNo" />
+		<result column="review_origin_no" property="reviewOriginNo" />
+		<result column="board_no" property="boardNo" />
+		<result column="board_type" property="boardType" />
+		<result column="review_content" property="reviewContent" />
+		<result column="review_writer" property="reviewWriter" />
+		<result column="review_dt" property="reviewDt" />
+		<result column="groupord" property="groupOrd" />
+		<result column="grouplayer" property="groupLayer" />
+
+	</resultMap>
+
+	<select id="selectBoardList" parameterType="string"
+		resultMap="boardDTO">
+		select * from board_tb where board_Type=#{value}
+	</select>
+
+	<delete id="deleteBoardNo" parameterType="map">
+		delete from board_tb
+		where board_type=#{boardType} and board_no=#{boardNo}
+	</delete>
+
+	<select id="selectBoardOne" parameterType="map"
+		resultMap="boardDTO">
+		select * from board_tb where board_type=#{boardType} and
+		board_no=#{boardNo}
+	</select>
+
+	<update id="updateBoard" parameterType="map">
+		update board_tb set
+		board_sub=#{boardSub}, board_content=#{boardContent} where
+		board_type=#{boardType} and board_no=#{boardNo}
+	</update>
+
+	<insert id="insertBoard" parameterType="boardDTO">
+		insert into
+		board_tb(board_type,user_id,board_sub,board_content,board_dt,board_hit)
+		values(#{boardType},#{userId},#{boardSub},#{boardContent},sysdate(),0)
+	</insert>
+
+	<select id="selectReviewList" parameterType="map"
+		resultMap="reviewDTO">
+		select * from board_review_tb
+		where
+		board_type=#{boardType}
+		and board_no=#{boardNo}
+		order by REVIEW_ORIGIN_NO desc, groupOrd asc;
+	</select>
+
+	<select id="selectBoardReviewNo" parameterType="reviewDTO"
+		resultType="int">
+		select ifnull(max(review_no),0) from board_review_tb
+		where
+		board_type=#{boardType} and board_no=#{boardNo}
+	</select>
+
+	<insert id="insertBoardReview" parameterType="reviewDTO">
+		insert into
+		board_review_tb(REVIEW_ORIGIN_NO, BOARD_NO, BOARD_TYPE, REVIEW_CONTENT
+		, REVIEW_WRITER, REVIEW_DT, GROUPORD, GROUPLAYER)
+		values(#{reviewOriginNo},#{boardNo},#{boardType},#{reviewContent},#{reviewWriter},sysdate(),#{groupOrd},#{groupLayer})
+	</insert>
+
+	<select id="listCriteria">
+		select * from board_tb where board_no>0 order by
+		board_no desc, board_dt desc limit #{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="selectBoardPage" parameterType="map" resultMap="boardDTO">
+		select * from board_tb ORDER BY board_no DESC LIMIT #{offset}, #{noOfRecords}  <!-- offset위치부터 noOfRecords 수 만큼 select 하라! -->
+	</select>
+	
+	<select id="selectBoardCount" resultType="int">
+		select count(*) from board_tb
+	</select>
+	
+	<update id="increaseBoardHit" parameterType="boardDTO">
+		update board_tb set board_hit=#{boardHit} where board_no=#{boardNo} 
+	</update>
+</mapper>
+
