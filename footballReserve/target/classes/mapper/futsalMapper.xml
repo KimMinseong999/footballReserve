@@ -20,28 +20,88 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insertFutsal" parameterType="futsalDTO">
 		insert
-		fb_tb(user_id,fb_sub,fb_content,fb_addr,fb_maxuser)
-		values(#{userId},#{futsalSub},#{futsalContent},#{futsalAddr},#{futsalMaxUser})
+		fb_tb(FB_NO,user_id,fb_sub,fb_content,fb_addr,fb_maxuser)
+		values(#{futsalNo},#{userId},#{futsalSub},#{futsalContent},#{futsalAddr},#{futsalMaxUser})
 	</insert>
 
 	<insert id="insertFutsalFacilities"
 		parameterType="futsalFacilitiesDTO">
 		insert
-		fb_facilities_tb(FB_GRASS,FB_LIGHT,FB_SR,FB_PARK)
-		values(#{futsalGrass},#{futsalLight},#{futsalShowerRoom},#{futsalPark})
+		fb_facilities_tb(FB_NO,FB_GRASS,FB_LIGHT,FB_SR,FB_PARK)
+		values
+		(
+		#{futsalNo},
+		<choose>
+			<when test="futsalGrass==''">
+				0,
+			</when>
+			<otherwise>
+				#{futsalGrass},
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="futsalLight==''">
+				0,
+			</when>
+			<otherwise>
+				#{futsalLight},
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="futsalShowerRoom==''">
+				0,
+			</when>
+			<otherwise>
+				#{futsalShowerRoom},
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="futsalPark==''">
+				0
+			</when>
+			<otherwise>
+				#{futsalPark}
+			</otherwise>
+		</choose>
+		)
 	</insert>
 
 	<insert id="insertFutsalRental" parameterType="futsalRentalDTO">
 		insert
-		fb_rental_tb(FB_RENTAL_BALL,FB_RENTAL_UNIFORM,FB_RENTAL_SHOES)
-		values(#{futsalRentalBall},#{futsalRentalUniform},#{futsalRentalShoes})
+		fb_rental_tb(FB_NO,FB_RENTAL_BALL,FB_RENTAL_UNIFORM,FB_RENTAL_SHOES)
+		values(
+		#{futsalNo},
+		<choose>
+			<when test="futsalRentalBall==''">
+				0,
+			</when>
+			<otherwise>
+				#{futsalRentalBall},
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="futsalRentalUniform==''">
+				0,
+			</when>
+			<otherwise>
+				#{futsalRentalUniform},
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="futsalRentalShoes==''">
+				0
+			</when>
+			<otherwise>
+				#{futsalRentalShoes}
+			</otherwise>
+		</choose>
+		)
 	</insert>
-
 
 	<insert id="insertFutsalPPH" parameterType="futsalPPHDTO">
 		insert
-		fb_pph_tb(FB_PRICE,FB_START,FB_END)
-		values(#{futsalPrice},#{futsalStart},#{futsalEnd})
+		fb_pph_tb(FB_NO,FB_PRICE,FB_START,FB_END)
+		values(#{futsalNo},#{futsalPrice},#{futsalStart},#{futsalEnd})
 	</insert>
 
 	<insert id="insertImg" parameterType="futsalImageDTO">

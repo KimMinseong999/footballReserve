@@ -48,20 +48,3 @@ public class FutsalController {
 		return mv;
 	}
 }
-
-/*
- * System.out.println("주차장등록 컨트롤러 진입"); UserDTO
- * userDTO=(UserDTO)SecurityContextHolder.getContext().getAuthentication().
- * getPrincipal(); ModelAndView mv = new ModelAndView();
- * System.out.println(userDTO.getUserId());
- * parkDto.setUserId(userDTO.getUserId());
- * 
- * //멀티 파일 업로드 List<MultipartFile> mf = req.getFiles("files"); imgPath =
- * session.getServletContext().getRealPath("/resources/images/park");// 파일 저장 폴더
- * 경로
- * 
- * service.sellerParkRegist(parkDto, carTypeDto, parkImgDto, parkRegiDto,
- * imgPath, mf);
- * 
- * mv.setViewName("redirect:/seller/sellerParkList");
- */

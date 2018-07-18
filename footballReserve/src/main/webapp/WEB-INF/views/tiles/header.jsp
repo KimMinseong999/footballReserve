@@ -36,7 +36,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="${pageContext.request.contextPath}/">메인</a></li>
-					<li><a href="#">예약하기</a></li>
+					<li><a href="${pageContext.request.contextPath}/futsal/Re">예약하기</a></li>
 					<li><a href="${pageContext.request.contextPath}/futsal/insertFutsalForm">풋살장 등록</a>
 					<li><a
 						href="${pageContext.request.contextPath}/board/list/free">커뮤니티</a></li>

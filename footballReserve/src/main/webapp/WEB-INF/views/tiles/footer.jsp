@@ -16,7 +16,7 @@
 					<span>Menu</span>
 					<li><a href="#">Home</a></li>
 					<li><a href="#">예약</a></li>
-					<li><a href="#">커뮤니티</a></li>
+					<li><a href="${pageContext.request.contextPath}/board/list/free">커뮤니티</a></li>
 				</ul>
 			</div>
 

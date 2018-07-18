@@ -43,32 +43,104 @@
 			reader.readAsDataURL(file[i]); // 파일을 읽는다
 		}
 	}
+
+	// 유효성 체크
+	function checkValid() {
+		var f = window.document.insertFutsalForm;
+		var regExp = /^[0-9]+$/;
+		
+		if (f.userId.value == "") {
+			alert("로그인하고 이용하세요.");
+			this.focus();
+			return false;
+		}
+		if (f.futsalSub.value == "") {
+			alert("풋살장 이름을 입력해 주세요.");
+			this.focus();
+			return false;
+		}
+		if (f.futsalAddr.value == "") {
+			alert("풋살장 주소를 입력해 주세요.");
+			this.focus();
+			return false;
+		}
+		if (f.futsalMaxUser.value == "") {
+			alert("최대 사용자수를 입력하세요.");
+			this.focus();
+			return false;
+		}
+		if (!regExp.test($(futsalMaxUser).val())) {
+			alert("최대 사용자수에는 숫자를 입력하세요.");
+			this.focus();
+			return false;
+		}
+		if (f.futsalPrice.value == "") {
+			alert("시간당 가격을 입력하세요.");
+			this.focus();
+			return false;
+		}
+		if (!regExp.test($(futsalPrice).val())) {
+			alert("시간당 가격에는 숫자를 입력하세요.");
+			this.focus();
+			return false;
+		}
+		if (f.futsalContent.value == "") {
+			alert("풋살장 설명을 입력하세요.");
+			this.focus();
+			return false;
+		}
+		if (f.futsalStart.value == "") {
+			alert("예약 시작 시간을 입력하세요.");
+			this.focus();
+			return false;
+		}
+		if (f.futsalEnd.value <= f.futsalStart.value) {
+			alert("올바른 예약 범위로 선택해주세요");
+			f.futsalEnd.value = "";
+			this.focus();
+			return false;
+		}
+		if (f.futsalEnd.value == "") {
+			alert("예약 종료 시간을 입력하세요.");
+			this.focus();
+			return false;
+		}
+
+		return true;
+	}
 </script>
 
 <div class="container">
 
 	<h1>풋살장 등록</h1>
 
-	<form action="${pageContext.request.contextPath}/futsal/insert"
-		method="post" enctype="multipart/form-data">
+	<form name="insertFutsalForm"
+		action="${pageContext.request.contextPath}/futsal/insert"
+		method="post" enctype="multipart/form-data"
+		onSubmit='return checkValid()'>
 		<table class="table table-bordered">
 			<tr>
 				<th>글쓴이</th>
 				<th><input type="text" name="userId"
-					value="${sessionScope.userId}" readonly="readonly"></th>
+					value="${sessionScope.userId}" readonly="readonly" id="userId"></th>
 			</tr>
 			<tr>
 				<th>풋살장 이름</th>
-				<th><input type="text" name="futsalSub" /></th>
+				<th><input type="text" name="futsalSub" id="futsalSub" /></th>
 			</tr>
 			<tr>
 				<th>주소</th>
-				<th><input type="text" name="futsalAddr" /></th>
+				<th><input type="text" name="futsalAddr" id="futsalAddr" /></th>
 			</tr>
 			<tr>
 				<th>최대 사용자</th>
 				<th><input type="text" name="futsalMaxUser"
-					placeholder="숫자만 입력하세요" /></th>
+					placeholder="숫자만 입력하세요" id="futsalMaxUser" /></th>
+			</tr>
+			<tr>
+				<th>가격</th>
+				<th><input type="text" name="futsalPrice"
+					placeholder="숫자만 입력하세요" id="futsalPrice" /></th>
 			</tr>
 			<tr>
 				<th>내용</th>
@@ -95,11 +167,11 @@
 			<tr>
 				<th rowspan="2">등록 기간</th>
 				<th>시작 날짜 : <input type="text" class='datetimepicker'
-					id="futsalStart" name="futsalStart" /></th>
+					id="futsalStart" name="futsalStart" id="futsalStart" /></th>
 			</tr>
 			<tr>
 				<th>종료 날짜 : <input type="text" id="futsalEnd"
-					class='datetimepicker2' name="futsalEnd" /></th>
+					class='datetimepicker2' name="futsalEnd" id="futsalEnd" /></th>
 			</tr>
 			<tr>
 				<th>이미지 업로드</th>

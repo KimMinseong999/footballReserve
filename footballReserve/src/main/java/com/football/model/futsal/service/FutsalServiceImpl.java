@@ -62,13 +62,11 @@ public class FutsalServiceImpl implements FutsalService {
 
 			// DAO 호출
 			int resultParkImg = futsalDAO.insertImg(futsalImageDTO);
-			System.out.println("resultParkImg" + resultParkImg);
 			if (resultParkImg == 0) {
 				throw new RuntimeException();
 			}
 
 			file.transferTo(new File(imgPath + "/" + fileName));// 이미지 저장
-			System.out.println("이미지 업로드 후");
 		}
 	}
 }
