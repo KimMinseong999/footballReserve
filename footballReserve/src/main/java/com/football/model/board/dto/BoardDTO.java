@@ -1,5 +1,7 @@
 package com.football.model.board.dto;
 
+import java.util.List;
+
 public class BoardDTO {
 
 	private int boardNo;
@@ -11,12 +13,12 @@ public class BoardDTO {
 	private int boardHit;
 	private int startIndex;
 	private int pageSize;
+	private List<ReviewDTO> reviewDTO;
 	
 	public BoardDTO() {}
 
 	public BoardDTO(int boardNo, String boardType, String userId, String boardSub, String boardContent, String boardDt,
-			int boardHit) {
-		super();
+			int boardHit, int startIndex, int pageSize, List<ReviewDTO> reviewDTO) {
 		this.boardNo = boardNo;
 		this.boardType = boardType;
 		this.userId = userId;
@@ -24,6 +26,9 @@ public class BoardDTO {
 		this.boardContent = boardContent;
 		this.boardDt = boardDt;
 		this.boardHit = boardHit;
+		this.startIndex = startIndex;
+		this.pageSize = pageSize;
+		this.reviewDTO = reviewDTO;
 	}
 
 	public int getBoardNo() {
@@ -82,11 +87,27 @@ public class BoardDTO {
 		this.boardHit = boardHit;
 	}
 
-	public void setStartIndex(int startIndex) {
-		this.startIndex=startIndex;
+	public int getStartIndex() {
+		return startIndex;
 	}
 
-	public void setCntPerPage(int pageSize) {
-		this.pageSize=pageSize;
+	public void setStartIndex(int startIndex) {
+		this.startIndex = startIndex;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public List<ReviewDTO> getReviewDTO() {
+		return reviewDTO;
+	}
+
+	public void setReviewDTO(List<ReviewDTO> reviewDTO) {
+		this.reviewDTO = reviewDTO;
 	}
 }

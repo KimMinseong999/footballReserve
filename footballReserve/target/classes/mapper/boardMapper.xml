@@ -96,17 +96,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from board_tb where board_no>0 order by
 		board_no desc, board_dt desc limit #{pageStart}, #{perPageNum}
 	</select>
-	
-	<select id="selectBoardPage" parameterType="map" resultMap="boardDTO">
-		select * from board_tb ORDER BY board_no DESC LIMIT #{offset}, #{noOfRecords}  <!-- offset위치부터 noOfRecords 수 만큼 select 하라! -->
+
+	<select id="selectBoardPage" parameterType="map"
+		resultMap="boardDTO">
+		select * from board_tb ORDER BY board_no DESC LIMIT #{offset},
+		#{noOfRecords}  <!-- offset위치부터 noOfRecords 수 만큼 select 하라! -->
 	</select>
-	
+
 	<select id="selectBoardCount" resultType="int">
-		select count(*) from board_tb
+		select count(*) from
+		board_tb
 	</select>
-	
+
 	<update id="increaseBoardHit" parameterType="boardDTO">
-		update board_tb set board_hit=#{boardHit} where board_no=#{boardNo} 
+		update board_tb set
+		board_hit=#{boardHit} where board_no=#{boardNo}
 	</update>
+
+	<delete id="deleteBoardReview" parameterType="int">
+		delete from board_review_tb where review_no=#{reviewNo}
+	</delete>
 </mapper>
 

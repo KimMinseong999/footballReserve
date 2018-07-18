@@ -83,7 +83,7 @@ public class BoardController {
 		ModelAndView mv = new ModelAndView();
 		BoardDTO boardDTO = boardService.selectBoardOne(boardType, boardNo, null, null);
 		mv.addObject("boardDTO", boardDTO);
-		mv.setViewName("/board/updateForm");
+		mv.setViewName("/board/updateBoardForm");
 		return mv;
 	}
 
@@ -110,7 +110,7 @@ public class BoardController {
 	@RequestMapping("/insertForm/{boardType}")
 	public ModelAndView moveInsertForm(@PathVariable String boardType) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/board/insertForm");
+		mv.setViewName("/board/insertBoardForm");
 		return mv;
 
 	}
@@ -137,6 +137,15 @@ public class BoardController {
 		boardService.insertBoardReview(reviewDTO, reviewOriginNo);
 		mv.setViewName("redirect:/board/detail/" + reviewDTO.getBoardType() + "/" + reviewDTO.getBoardNo());
 		return mv;
+	}
+	
+	@RequestMapping("/delteBoardReview/{boardType}/{boardNo}/{reviewNo}")
+	public ModelAndView delteBoardReview(@PathVariable String boardType, @PathVariable int boardNo, @PathVariable int reviewNo) {
+		ModelAndView mv = new ModelAndView();
+		boardService.deleteBoardReview(reviewNo);
+		mv.setViewName("redirect:/board/detail/" + boardType + "/" + boardNo);
+		return mv;
+
 	}
 
 }

@@ -1,5 +1,11 @@
 package com.football.model.user.dto;
 
+import java.util.List;
+
+import com.football.model.board.dto.BoardDTO;
+import com.football.model.futsal.dto.FutsalDTO;
+import com.football.model.futsal.dto.FutsalReserveDTO;
+
 public class UserDTO {
 
 	private String userId;
@@ -13,12 +19,15 @@ public class UserDTO {
 	private int userUsage;
 	private String userGrade;
 	private String userKakaoId;
+	private List<FutsalDTO> futsalDTO;
+	private List<FutsalReserveDTO> futsalReserveDTO;
+	private List<BoardDTO> boardDTO;
 	
 	public UserDTO() {}
 
 	public UserDTO(String userId, String userPwd, String userName, String userEmail, String userPhone, String userDt,
-			String userAuthority, int userPoint, int userUsage, String userGrade, String userKakaoId) {
-		super();
+			String userAuthority, int userPoint, int userUsage, String userGrade, String userKakaoId,
+			List<FutsalDTO> futsalDTO, List<FutsalReserveDTO> futsalReserveDTO, List<BoardDTO> boardDTO) {
 		this.userId = userId;
 		this.userPwd = userPwd;
 		this.userName = userName;
@@ -30,6 +39,9 @@ public class UserDTO {
 		this.userUsage = userUsage;
 		this.userGrade = userGrade;
 		this.userKakaoId = userKakaoId;
+		this.futsalDTO = futsalDTO;
+		this.futsalReserveDTO = futsalReserveDTO;
+		this.boardDTO = boardDTO;
 	}
 
 	public String getUserId() {
@@ -119,7 +131,28 @@ public class UserDTO {
 	public void setUserKakaoId(String userKakaoId) {
 		this.userKakaoId = userKakaoId;
 	}
-	
-	
-	
+
+	public List<FutsalDTO> getFutsalDTO() {
+		return futsalDTO;
+	}
+
+	public void setFutsalDTO(List<FutsalDTO> futsalDTO) {
+		this.futsalDTO = futsalDTO;
+	}
+
+	public List<FutsalReserveDTO> getFutsalReserveDTO() {
+		return futsalReserveDTO;
+	}
+
+	public void setFutsalReserveDTO(List<FutsalReserveDTO> futsalReserveDTO) {
+		this.futsalReserveDTO = futsalReserveDTO;
+	}
+
+	public List<BoardDTO> getBoardDTO() {
+		return boardDTO;
+	}
+
+	public void setBoardDTO(List<BoardDTO> boardDTO) {
+		this.boardDTO = boardDTO;
+	}
 }

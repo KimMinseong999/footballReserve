@@ -106,4 +106,9 @@ public class BoardDAOImpl implements BoardDAO {
 		session.update("boardMapper.increaseBoardHit", boardDTO);
 	}
 
+	@Override
+	public void deleteBoardReview(int reviewNo) {
+		session.delete("boardMapper.deleteBoardReview", reviewNo);
+	}
+
 }

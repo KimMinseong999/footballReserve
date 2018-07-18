@@ -32,45 +32,45 @@ public class BoardServiceImpl implements BoardService {
 
 	}
 
-	@Transactional
 	@Override
 	public BoardDTO selectBoardOne(String boardType, int boardNo, HttpServletRequest request,
 			HttpServletResponse response) {
 		BoardDTO boardDTO = boardDAO.selectBoardOne(boardType, boardNo, request, response);
-		
-		Cookie[] cookies = request.getCookies();
-		String boardCookieVal = "";
-		boolean hasRead = false;
+		if (request != null && response !=null) {
 
-		if (cookies != null) {
-			for (Cookie c : cookies) {
-				String name = c.getName();
-				String value = c.getValue();
+			Cookie[] cookies = request.getCookies();
+			String boardCookieVal = "";
+			boolean hasRead = false;
 
-				if ("boardCookie".equals(name)) {
-					boardCookieVal = value;
-					if (boardCookieVal.contains("|" + boardDTO.getBoardNo() + "|")) {
-						hasRead = true;
-						break;
+			if (cookies != null) {
+				for (Cookie c : cookies) {
+					String name = c.getName();
+					String value = c.getValue();
+
+					if ("boardCookie".equals(name)) {
+						boardCookieVal = value;
+						if (boardCookieVal.contains("|" + boardDTO.getBoardNo() + "|")) {
+							hasRead = true;
+							break;
+						}
 					}
-				}
 
+				}
+			}
+
+			// 게시글 읽음 여부 따지기
+			if (!hasRead) {
+				// 조회수 증가
+				boardDTO.setBoardHit(boardDTO.getBoardHit() + 1);
+				boardDAO.increaseBoardHit(boardDTO);
+
+				// 쿠키생성
+				Cookie boardCookie = new Cookie("boardCookie", boardCookieVal + "|" + boardDTO.getBoardNo() + "|");
+				// boardCookie.setPath("/mvc/board"); 안적으면 저절로 현재 경로로 잡힘.
+				// boardCookie.setMaxAge(60*60*24); //작성 안하면, 브라우져에 영구저장.
+				response.addCookie(boardCookie);
 			}
 		}
-
-		// 게시글 읽음 여부 따지기
-		if (!hasRead) {
-			// 조회수 증가
-			boardDTO.setBoardHit(boardDTO.getBoardHit() + 1);
-			boardDAO.increaseBoardHit(boardDTO);
-
-			// 쿠키생성
-			Cookie boardCookie = new Cookie("boardCookie", boardCookieVal + "|" + boardDTO.getBoardNo() + "|");
-			// boardCookie.setPath("/mvc/board"); 안적으면 저절로 현재 경로로 잡힘.
-			// boardCookie.setMaxAge(60*60*24); //작성 안하면, 브라우져에 영구저장.
-			response.addCookie(boardCookie);
-		}
-
 		return boardDTO;
 	}
 
@@ -89,7 +89,6 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.selectReviewList(boardType, boardNo);
 	}
 
-	@Transactional
 	@Override
 	public void insertBoardReview(ReviewDTO reviewDTO) {
 		int reviewNo = boardDAO.selectBoardReviewNo(reviewDTO);
@@ -111,6 +110,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int selectBoardCount() {
 		return boardDAO.selectBoardCount();
+	}
+
+	@Override
+	public void deleteBoardReview(int reviewNo) {
+		boardDAO.deleteBoardReview(reviewNo);
 	}
 
 }

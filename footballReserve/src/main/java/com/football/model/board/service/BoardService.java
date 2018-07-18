@@ -29,4 +29,6 @@ public interface BoardService {
 	public List<BoardDTO> selectBoardPage(int offset, int noOfRecords) throws Exception;
 
 	int selectBoardCount();
+
+	void deleteBoardReview(int reviewNo);
 }

@@ -24,5 +24,10 @@
   <definition extends="layout" name="/sign/*">
     <put-attribute name="content" value="/WEB-INF/views/sign/{1}.jsp"/>
   </definition>
+  
+   <definition extends="layout" name="/futsal/*">
+    <put-attribute name="content" value="/WEB-INF/views/futsal/{1}.jsp"/>
+  </definition>
+  
  
 </tiles-definitions>

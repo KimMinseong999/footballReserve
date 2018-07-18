@@ -32,5 +32,7 @@ public interface BoardDAO {
 
 	void increaseBoardHit(BoardDTO boardDTO);
 
+	void deleteBoardReview(int reviewNo);
+
 
 }

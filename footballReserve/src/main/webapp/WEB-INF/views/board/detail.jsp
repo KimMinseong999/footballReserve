@@ -2,6 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<script>
+
+</script>
+
 <div class="container">
 	<table class="table">
 		<tr>
@@ -60,24 +64,30 @@
 				<th>${reviewDTO.reviewWriter}</th>
 				<th>${reviewDTO.reviewDt}</th>
 			</tr>
-			<tr>
-				<th colspan="3"><form
-						action="${pageContext.request.contextPath}/board/insertBoardReview/${reviewDTO.reviewOriginNo}">
-						<input type="text" name="reviewContent" id="reviewContent" /> <input
-							type="hidden" name="reviewNo" value="${reviewDTO.reviewNo}" /> <input
-							type="hidden" name="reviewWriter" value="${sessionScope.userId}" />
-						<input type="hidden" name="boardNo" value="${boardDTO.boardNo}" />
-						<input type="hidden" name="boardType"
-							value="${boardDTO.boardType}" />
-						<c:set var="groupOrd" value="${reviewDTO.groupOrd}" />
-						<input type="hidden" name="groupOrd" value="${groupOrd+1}" />
-						<c:set var="groupLayer" value="${reviewDTO.groupLayer}" />
-						<input type="hidden" name="groupLayer" value="${groupLayer+1}" />
-						<c:if test="${loginUserId ne null}">
-							<button>대댓글 달기</button>
-						</c:if>
-					</form></th>
-			</tr>
+			<c:if test="${loginUserId ne null}">
+
+				<tr>
+					<th colspan="2"><form
+							action="${pageContext.request.contextPath}/board/insertBoardReview/${reviewDTO.reviewOriginNo}">
+							<input type="text" name="reviewContent" id="reviewContent" /> <input
+								type="hidden" name="reviewNo" value="${reviewDTO.reviewNo}" />
+							<input type="hidden" name="reviewWriter"
+								value="${sessionScope.userId}" /> <input type="hidden"
+								name="boardNo" value="${boardDTO.boardNo}" /> <input
+								type="hidden" name="boardType" value="${boardDTO.boardType}" />
+							<c:set var="groupOrd" value="${reviewDTO.groupOrd}" />
+							<input type="hidden" name="groupOrd" value="${groupOrd+1}" />
+							<c:set var="groupLayer" value="${reviewDTO.groupLayer}" />
+							<input type="hidden" name="groupLayer" value="${groupLayer+1}" />
+							<c:if test="${loginUserId ne null}">
+								<button>대댓글 달기</button>
+							</c:if>
+						</form></th>
+					<th>
+					<a href="${pageContext.request.contextPath}/board/delteBoardReview/${reviewDTO.boardType}/${reviewDTO.boardNo}/${reviewDTO.reviewNo}"><button type="button">삭제</button></a>
+					</th>
+				</tr>
+			</c:if>
 		</c:forEach>
 	</table>
 	<br> <br>
