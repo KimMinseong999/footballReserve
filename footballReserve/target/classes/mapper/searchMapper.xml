@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="searchMapper">
+	
+	<resultMap type="userDTO" id="userDTO">
+		<id column="user_id" property="userId" />
+		<result column="user_pwd" property="userPwd" />
+		<result column="user_Name" property="userName" />
+		<result column="user_Email" property="userEmail" />
+		<result column="user_Phone" property="userPhone" />
+		<result column="user_dt" property="userDt" />
+		<result column="user_Authority" property="userAuthority" />
+		<result column="user_point" property="userPoint" />
+		<result column="user_usage" property="userUsage" />
+		<result column="user_grade" property="userGrade" />
+	</resultMap>
+
+	<resultMap type="futsalDTO" id="futsalDTO">
+		<id column="fb_no" property="futsalNo" />
+		<result column="user_id" property="userId" />
+		<result column="fb_sub" property="futsalSub" />
+		<result column="fb_content" property="futsalContent" />
+		<result column="fb_addr" property="futsalAddr" />
+		<result column="fb_maxuser" property="futsalMaxUser" />
+		<association property="futsalFacilitiesDTO"
+			javaType="futsalFacilitiesDTO">
+			<result column="fb_no" property="futsalNo" />
+			<result column="fb_Grass" property="futsalGrass" />
+			<result column="fb_light" property="futsalLight" />
+			<result column="fb_SR" property="futsalShowerRoom" />
+			<result column="fb_park" property="futsalPark" />
+		</association>
+		<association property="futsalRentalDTO"
+			javaType="futsalRentalDTO">
+			<result column="fb_no" property="futsalNo" />
+			<result column="fb_rental_ball" property="futsalRentalBall" />
+			<result column="fb_rental_uniform"
+				property="futsalRentalUniform" />
+			<result column="fb_rental_shoes" property="futsalRentalShoes" />
+		</association>
+		<association property="futsalPPHDTO"
+			javaType="futsalPPHDTO">
+			<result column="fb_no" property="futsalNo" />
+			<result column="fb_price" property="futsalPrice" />
+			<result column="fb_start" property="futsalStart" />
+			<result column="fb_end" property="futsalEnd" />
+		</association>
+		<collection property="futsalImageDTO" ofType="futsalImageDTO">
+			<id column="fb_image_no" property="futsalImageNo" />
+			<result column="fb_no" property="futsalNo" />
+			<result column="fb_img_path" property="futsalImagePath" />
+		</collection>
+	</resultMap>
+	
+	<select id="selectSidoList" resultType="string">
+		select distinct(sido) from address_tb
+	</select>
+	
+	<select id="selectGugunList" parameterType="string" resultType="string">
+		select distinct(gugun) from address_tb where sido=#{_parameter}
+	</select>
+	
+	<select id="selectFutsalListPage" parameterType="map" resultMap="futsalDTO">
+		select * from fb_tb natural join fb_facilities_tb natural join fb_rental_tb
+		natural join fb_pph_tb
+		natural join fb_image_tb where fb_no>0 order by fb_no desc LIMIT #{offset},
+		#{noOfRecords}
+	</select>
+
+</mapper>

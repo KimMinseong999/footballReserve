@@ -15,4 +15,10 @@ public interface FutsalService {
 	void insertFutsal(FutsalDTO futsalDTO, FutsalFacilitiesDTO futsalFacilitiesDTO, FutsalRentalDTO futsalRentalDTO,
 			FutsalPPHDTO futsalPPHDTO, FutsalImageDTO futsalImageDTO, String imgPath, List<MultipartFile> mf) throws Exception;
 
+	List<FutsalDTO> selectFutsalListPage(int offset, int noOfRecords);
+
+	int selectFutsalCount();
+
+	FutsalDTO selectFutsalOne(int futsalNo);
+
 }

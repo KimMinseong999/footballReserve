@@ -34,7 +34,7 @@
 		<beans:property name="mapperLocations"
 			value="classpath:mapper/*Mapper.xml" />
 		<beans:property name="typeAliasesPackage"
-			value="com.football.model.user.dto,com.football.model.board.dto,com.football.model.futsal.dto" />
+			value="com.football.model.user.dto,com.football.model.board.dto,com.football.model.futsal.dto,com.football.model.search.dto" />
 		<beans:property name="configLocation"
 			value="classpath:mapper/SqlMapConfig.xml" />
 	</beans:bean>

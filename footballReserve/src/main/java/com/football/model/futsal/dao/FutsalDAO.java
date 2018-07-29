@@ -1,5 +1,7 @@
 package com.football.model.futsal.dao;
 
+import java.util.List;
+
 import com.football.model.futsal.dto.FutsalDTO;
 import com.football.model.futsal.dto.FutsalFacilitiesDTO;
 import com.football.model.futsal.dto.FutsalImageDTO;
@@ -19,5 +21,11 @@ public interface FutsalDAO {
 	int insertImg(FutsalImageDTO futsalImageDTO);
 
 	int selectFutsalNo();
+
+	List<FutsalDTO> selectFutsalListPage(int offset, int noOfRecords);
+
+	int selectfutsalCount();
+
+	FutsalDTO selectFutsalOne(int futsalNo);
 
 }

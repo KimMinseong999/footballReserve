@@ -6,7 +6,8 @@
 	src="//mugifly.github.io/jquery-simple-datetimepicker/jquery.simple-dtpicker.js"></script>
 <link rel="stylesheet"
 	href="//mugifly.github.io/jquery-simple-datetimepicker/jquery.simple-dtpicker.css">
-
+<link
+	rel="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" />
 <script>
 	$(document).ready(function() {
 		$('.datetimepicker').appendDtpicker({
@@ -48,7 +49,7 @@
 	function checkValid() {
 		var f = window.document.insertFutsalForm;
 		var regExp = /^[0-9]+$/;
-		
+
 		if (f.userId.value == "") {
 			alert("로그인하고 이용하세요.");
 			this.focus();
@@ -109,6 +110,16 @@
 		return true;
 	}
 </script>
+<style>
+tr th:first-child {
+	width: 35%;
+	text-align: center;
+}
+
+tr th:last-child {
+	width: 65%;
+}
+</style>
 
 <div class="container">
 
@@ -117,34 +128,37 @@
 	<form name="insertFutsalForm"
 		action="${pageContext.request.contextPath}/futsal/insert"
 		method="post" enctype="multipart/form-data"
-		onSubmit='return checkValid()'>
+		onSubmit='return checkValid()' class=".form-inline">
 		<table class="table table-bordered">
 			<tr>
 				<th>글쓴이</th>
-				<th><input type="text" name="userId"
-					value="${sessionScope.userId}" readonly="readonly" id="userId"></th>
+				<th>${sessionScope.userId}<input type="hidden" name="userId"
+					value="${sessionScope.userId}" id="userId"></th>
 			</tr>
 			<tr>
 				<th>풋살장 이름</th>
-				<th><input type="text" name="futsalSub" id="futsalSub" /></th>
+				<th><input type="text" name="futsalSub" id="futsalSub"
+					class="form-control" /></th>
 			</tr>
 			<tr>
 				<th>주소</th>
-				<th><input type="text" name="futsalAddr" id="futsalAddr" /></th>
+				<th><input type="text" name="futsalAddr" id="futsalAddr"
+					class="form-control" /></th>
 			</tr>
 			<tr>
 				<th>최대 사용자</th>
 				<th><input type="text" name="futsalMaxUser"
-					placeholder="숫자만 입력하세요" id="futsalMaxUser" /></th>
+					placeholder="숫자만 입력하세요" id="futsalMaxUser" class="form-control" /></th>
 			</tr>
 			<tr>
 				<th>가격</th>
 				<th><input type="text" name="futsalPrice"
-					placeholder="숫자만 입력하세요" id="futsalPrice" /></th>
+					placeholder="숫자만 입력하세요" id="futsalPrice" class="form-control" /></th>
 			</tr>
 			<tr>
 				<th>내용</th>
-				<th><textarea name="futsalContent" cols="100%" rows="8"></textarea></th>
+				<th><textarea name="futsalContent" cols="100%" rows="8"
+						class="form-control"></textarea></th>
 			</tr>
 			<tr>
 				<th>대여 가능 장비</th>
@@ -165,13 +179,15 @@
 				</th>
 			</tr>
 			<tr>
-				<th rowspan="2">등록 기간</th>
-				<th>시작 날짜 : <input type="text" class='datetimepicker'
+				<th>시작 날짜</th>
+				<th><input type="text" class='datetimepicker form-control'
 					id="futsalStart" name="futsalStart" id="futsalStart" /></th>
 			</tr>
 			<tr>
-				<th>종료 날짜 : <input type="text" id="futsalEnd"
-					class='datetimepicker2' name="futsalEnd" id="futsalEnd" /></th>
+				<th>종료 날짜</th>
+				<th><input type="text" id="futsalEnd"
+					class='datetimepicker2 form-control' name="futsalEnd"
+					id="futsalEnd" /></th>
 			</tr>
 			<tr>
 				<th>이미지 업로드</th>

@@ -69,4 +69,19 @@ public class FutsalServiceImpl implements FutsalService {
 			file.transferTo(new File(imgPath + "/" + fileName));// 이미지 저장
 		}
 	}
+
+	@Override
+	public List<FutsalDTO> selectFutsalListPage(int offset, int noOfRecords) {
+		return futsalDAO.selectFutsalListPage(offset, noOfRecords);
+	}
+
+	@Override
+	public int selectFutsalCount() {
+		return futsalDAO.selectfutsalCount();
+	}
+
+	@Override
+	public FutsalDTO selectFutsalOne(int futsalNo) {
+		return futsalDAO.selectFutsalOne(futsalNo);
+	}
 }

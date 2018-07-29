@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/photoSlide.css">
+<script src="${pageContext.request.contextPath}/resources/js/photoSlide.js"></script>
 
 <div class="w3-content w3-display-container">
 	<img class="mySlides"
@@ -21,6 +22,6 @@
 </div>
 
 <script
-	src="${pageContext.request.contextPath}/resources/js/photoSlide.js"></script>
-
+	src="${pageContext.request.contextPath}/resources/js/photoSlide.js">
+</script>
 <br>

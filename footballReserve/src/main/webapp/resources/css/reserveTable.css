@@ -1,0 +1,14 @@
+.reserveImageth{
+	width:50%;
+}
+img {
+	width: 100%;
+	min-height: 300px;
+}
+
+.thRight {
+	text-align: right;
+}
+
+table {
+	width: 100%;

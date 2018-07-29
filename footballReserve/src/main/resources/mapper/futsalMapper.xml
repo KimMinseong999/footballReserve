@@ -18,6 +18,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="user_grade" property="userGrade" />
 	</resultMap>
 
+	<resultMap type="futsalDTO" id="futsalDTO">
+		<id column="fb_no" property="futsalNo" />
+		<result column="user_id" property="userId" />
+		<result column="fb_sub" property="futsalSub" />
+		<result column="fb_content" property="futsalContent" />
+		<result column="fb_addr" property="futsalAddr" />
+		<result column="fb_maxuser" property="futsalMaxUser" />
+		<association property="futsalFacilitiesDTO"
+			javaType="futsalFacilitiesDTO">
+			<result column="fb_no" property="futsalNo" />
+			<result column="fb_Grass" property="futsalGrass" />
+			<result column="fb_light" property="futsalLight" />
+			<result column="fb_SR" property="futsalShowerRoom" />
+			<result column="fb_park" property="futsalPark" />
+		</association>
+		<association property="futsalRentalDTO"
+			javaType="futsalRentalDTO">
+			<result column="fb_no" property="futsalNo" />
+			<result column="fb_rental_ball" property="futsalRentalBall" />
+			<result column="fb_rental_uniform"
+				property="futsalRentalUniform" />
+			<result column="fb_rental_shoes" property="futsalRentalShoes" />
+		</association>
+		<association property="futsalPPHDTO"
+			javaType="futsalPPHDTO">
+			<result column="fb_no" property="futsalNo" />
+			<result column="fb_price" property="futsalPrice" />
+			<result column="fb_start" property="futsalStart" />
+			<result column="fb_end" property="futsalEnd" />
+		</association>
+		<collection property="futsalImageDTO" ofType="futsalImageDTO">
+			<id column="fb_image_no" property="futsalImageNo" />
+			<result column="fb_no" property="futsalNo" />
+			<result column="fb_img_path" property="futsalImagePath" />
+		</collection>
+	</resultMap>
+
 	<insert id="insertFutsal" parameterType="futsalDTO">
 		insert
 		fb_tb(FB_NO,user_id,fb_sub,fb_content,fb_addr,fb_maxuser)
@@ -114,4 +151,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select ifnull(max(fb_no),
 		0)+1 from fb_tb
 	</select>
+
+	<select id="selectFutsalListPage" parameterType="map"
+		resultMap="futsalDTO">
+		select * from fb_tb natural join fb_facilities_tb natural join fb_rental_tb
+		natural join fb_pph_tb
+		natural join fb_image_tb where fb_no>0 order by fb_no desc LIMIT #{offset},
+		#{noOfRecords}
+	</select>
+
+	<select id="selectFutsalCount" resultType="int">
+		select count(*) from
+		fb_tb
+	</select>
+	
+	<select id="selectFutsalOne" parameterType="int" resultMap="futsalDTO">
+		select * from fb_tb natural join fb_facilities_tb natural join fb_rental_tb
+		natural join fb_pph_tb
+		natural join fb_image_tb where fb_no=#{futsalNo}
+	</select>
+
 </mapper>
