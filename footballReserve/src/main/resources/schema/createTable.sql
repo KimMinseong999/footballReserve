@@ -1,3 +1,4 @@
+drop table ADDRESS_TB;
 drop table FB_RESERVE_TB;
 drop table FB_PPH_TB;
 drop table FB_IMAGE_TB;
@@ -112,4 +113,11 @@ CREATE TABLE FB_RESERVE_TB(
 	constraint FB_RESERVE_FBNO_FK foreign key(FB_NO) references FB_TB(FB_NO),
 	constraint FB_RESERVE_USERID_FK foreign key(user_Id) references user_tb(user_Id),
 	primary key(RE_NO)
+);
+
+CREATE TABLE ADDRESS_TB(
+	SIDO VARCHAR(100),
+    GUGUN VARCHAR(100),
+    DONG VARCHAR(100),
+    RI VARCHAR(100)
 );

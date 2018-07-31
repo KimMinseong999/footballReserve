@@ -51,6 +51,12 @@
 			})
 		})
 		
+		$("#gugun").change(function(){
+			$("[name='futsalAddr']").val($("#sido").val()+" "+$("#gugun").val())
+			var sido=$("#gugun").val();
+			var options="<option value=''></option>";
+		})
+		
 		$("#search").click(function(){
 			futsalChange()
 		})
@@ -79,7 +85,6 @@
 						futsalList[9] =	item.futsalNo;
 						loadFutsalList(futsalList);
 					})
-					alert(result.paging)
 					changePaging(result.paging);
 				},
 				error:function(request,status,error){
@@ -136,9 +141,9 @@
 				pagingData+="<div class='text-center marg-top'>"
 				pagingData+="<ul class='pagination'>"
 					if(futsalPaging.currentPageNo > 5){
-						pagingData+="<li><ahref='javascript:goPage('"+futsalPaging.prevPageNo+","+futsalPaging.maxPost+")'>이전</a></li>"
+						pagingData+="<li><a href='javascript:goPage("+futsalPaging.prevPageNo+","+futsalPaging.maxPost+")'>이전</a></li>"
 					}
-					for(i=futsalPaging.startPageNo; i<futsalPaging.endPageNo; i++){
+					for(i=futsalPaging.startPageNo; i<=futsalPaging.endPageNo; i++){
 						if(i == futsalPaging.currentPageNo){
 							pagingData+="<li class='active'><a href='javascript:goPage("+i+","+futsalPaging.maxPost+")'>"+i+"</a></li>"
 						}else{
@@ -146,11 +151,8 @@
 						}
 					} 
 					
-					futsalPaging.currentPage=Math.floor((futsalPaging.currentPage-1)/5)
-					futsalPaging.finalPage=Math.floor((futsalPaging.finalPage-1)/5)
-					
-					if(futsalPaging.currentPage < futsalPaging.finalPage){
-						pagingData+="<li><a href='javascript:goPage("+paging.nextPageNo+","+paging.maxPost+")'>다음</a></li>"
+					if(futsalPaging.currentPageNo < futsalPaging.finalPageNo){
+						pagingData+="<li><a href='javascript:goPage("+futsalPaging.nextPageNo+","+futsalPaging.maxPost+")'>다음</a></li>"
 					} 
 				pagingData+="</ul></div>"			
 				}
@@ -165,7 +167,7 @@
 		<table class="table">
 			<tr>
 				<th><select id="sido" class="custom-select">
-						<option value="" disabled selected hidden>시/도</option>
+						<option value="sido" disabled selected hidden>시/도</option>
 						<c:forEach items="${sidoList}" var="sido">
 							<option value="${sido}">${sido}</option>
 						</c:forEach>
@@ -199,7 +201,7 @@
 	<div id="pagingDiv"></div>
 	
 	<!-- 페이징  -->
-	<c:choose>
+<%-- 	<c:choose>
 		<c:when
 			test="${paging.numberOfRecords ne NULL and paging.numberOfRecords ne '' and paging.numberOfRecords ne 0}">
 			<div class="text-center marg-top">
@@ -244,7 +246,7 @@
 				</ul>
 			</div>
 		</c:when>
-	</c:choose>
+	</c:choose> --%>
 
 </div>
 
@@ -252,6 +254,99 @@
 
 <script>
 	function goPage(pages, lines) {
-		location.href = '?' + "pages=" + pages;
+		var queryString = $("form[name=searchData]").serialize();
+			$.ajax({
+			url:"${pageContext.request.contextPath}/search/selectFutsalList?pages="+pages,
+			data:queryString,
+			dataType: "json",
+			success : function(result){
+				$('#dataDiv').empty();
+				$('#pagingDiv').empty();
+				$.each(result.futsalList, function(index, item){
+					var futsalList = new Array();
+					futsalList[0] = item.futsalImageDTO[0].futsalImagePath;
+					futsalList[1] = item.futsalSub;
+					futsalList[2] = item.futsalAddr;
+					futsalList[3] = item.futsalMaxUser;
+					futsalList[4] = item.futsalPPHDTO.futsalPrice;
+					futsalList[5] = item.futsalFacilitiesDTO.futsalGrass;
+					futsalList[6] = item.futsalFacilitiesDTO.futsalLight;
+					futsalList[7] = item.futsalFacilitiesDTO.futsalShowerRoom;
+					futsalList[8] = item.futsalFacilitiesDTO.futsalPark;
+					futsalList[9] =	item.futsalNo;
+	 				loadFutsalList(futsalList);
+			})
+				changePaging(result.paging);
+			},
+			error:function(request,status,error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			} 
+		})
+		
+		function loadFutsalList(futsalList){
+				var listData="<table class='table'>"
+				listData+="<tr><th rowspan='6' class='reserveImageth'>"
+				listData+="<img src='${pageContext.request.contextPath}/resources/images/futsalImages/"+futsalList[0]+"/'></th>"
+				listData+="<th>풋살장 이름</th><th colspan='2'>"+futsalList[1]+"</th></tr>"
+				listData+="<tr><th>풋살장 주소</th><th colspan='2'>"+futsalList[2]+"</th></tr>"
+				listData+="<tr><th>최대 사용자 수</th><th colspan='2'>"+futsalList[3]+"명</th></tr>"
+				listData+="<tr><th>시간당 가격</th><th colspan='2'>"+futsalList[4]+"원</th></tr>"
+				listData+="<tr><th>보유시설</th>"
+				listData+="<th>"
+				if(futsalList[5] == null){
+					listData+="<span class='btn btn-info'>잔디</span>"
+				}else{
+					listData+="<span class='btn btn-default'>잔디</span>"
+				}
+
+				if(futsalList[6] == null){
+					listData+="<span class='btn btn-info'>조명</span>"
+				}else{
+					listData+="<span class='btn btn-default'>조명</span>"
+				}
+
+				if(futsalList[7] == null){
+					listData+="<span class='btn btn-info'>샤워룸</span>"		
+				}else{
+					listData+="<span class='btn btn-default'>샤워룸</span>"
+				}
+
+				if(futsalList[8] == null){
+					listData+="<span class='btn btn-info'>주차장</span>"
+				}else{
+					listData+="<span class='btn btn-default'>주차장</span>"
+				}
+				
+				listData+="</th>"
+				listData+="</tr>"
+				listData+="<tr><th colspan='3' class='thRight'><a href='${pageContext.request.contextPath}/futsal/reserveDetailForm/"+futsalList[9]+"'>"
+				listData+="<button type='button' class='btn btn-primary'>예약하러가기</button></a></th></tr>"
+				listData+="</table>"
+			$('#dataDiv').append(listData);
 	}
+			
+			function changePaging(futsalPaging){
+				var pagingData = ""
+					if(futsalPaging.numberOfRecords != null && futsalPaging.numberOfRecords != '' && futsalPaging.numberOfRecords != 0){
+					pagingData+="<div class='text-center marg-top'>"
+					pagingData+="<ul class='pagination'>"
+						if(futsalPaging.currentPageNo > 5){
+							pagingData+="<li><a href='javascript:goPage("+futsalPaging.prevPageNo+","+futsalPaging.maxPost+")'>이전</a></li>"
+						}
+						for(i=futsalPaging.startPageNo; i<=futsalPaging.endPageNo; i++){
+							if(i == futsalPaging.currentPageNo){
+								pagingData+="<li class='active'><a href='javascript:goPage("+i+","+futsalPaging.maxPost+")'>"+i+"</a></li>"
+							}else{
+								pagingData+="<li><a href='javascript:goPage("+i+","+futsalPaging.maxPost+")'>"+i+"</a></li>"
+							}
+						} 
+						
+						if(futsalPaging.currentPageNo < futsalPaging.finalPageNo){
+							pagingData+="<li><a href='javascript:goPage("+futsalPaging.nextPageNo+","+futsalPaging.maxPost+")'>다음</a></li>"
+						} 
+					pagingData+="</ul></div>"			
+					}
+				$('#pagingDiv').append(pagingData);
+			}
+}
 </script>

@@ -18,9 +18,9 @@
 			</tr>
 			<tr>
 				<th><input type="text" name="userId"
-					value="${sessionScope.userId}" readonly="readonly"></th>
-				<th><input type="text" name="boardSub" /></th>
-				<th><input type="text" name="boardContent" /></th>
+					value="${sessionScope.userId}" readonly="readonly" id="userId"></th>
+				<th><input type="text" name="boardSub"/></th>
+				<th><input type="text" name="boardContent"/></th>
 			</tr>
 		</table>
 		<button>글쓰기</button>

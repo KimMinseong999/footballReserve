@@ -23,7 +23,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(#{userId},#{userPwd},#{userName},#{userEmail},#{userPhone},sysdate(),1,0,0,1)
 	</insert>
 
-<select id="selectUser" parameterType="map" resultMap="userDTO">
+<select id="selectUserByIdPwd" parameterType="map" resultMap="userDTO">
 	select * from user_tb where user_id=#{userId} and user_pwd=#{userPwd}
+</select>
+
+<select id="selectUserOneById" parameterType="string" resultMap="userDTO">
+	select * from user_tb where user_id=#{_parameter}
 </select>
 </mapper>

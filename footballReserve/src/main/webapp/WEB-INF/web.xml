@@ -3,6 +3,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
+<filter>
+    <filter-name>XSS</filter-name>
+    <filter-class>com.football.filter.CrossScriptingFilter</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>XSS</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+
 <!-- post방식 한글인코딩 filter 등록 -->
  <filter>
    <filter-name>charaterEncoding</filter-name>

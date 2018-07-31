@@ -29,6 +29,7 @@
 							: 010 - 6662 - 9998</a></li>
 					<li><i class="fa fa-envelope"></i> <a href="#">이메일 :
 							minsong998@gmail.com</a></li>
+					<li><i class="fa fa-envelope"></i> <a href="https://github.com/KimMinseong999/footballReserve">git hub 주소 : https://github.com/KimMinseong999/footballReserve</a></li>	
 				</ul>
 			</div>
 		</div>

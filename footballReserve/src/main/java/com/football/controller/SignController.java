@@ -6,13 +6,15 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.football.model.user.dto.UserDTO;
-import com.football.model.user.service.SignService;
+import com.football.model.sign.dto.UserDTO;
+import com.football.model.sign.service.SignService;
 import com.football.util.KakaoLogin;
 
 @RequestMapping("/sign")
@@ -84,6 +86,21 @@ public class SignController {
 		// vo = service.kakaoLogin(vo);
 		mv.setViewName("redirect:/");
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/checkId", produces="application/text;charset=utf8")
+	public String checkID(@RequestParam String userId) {
+		UserDTO userDTO = signService.checkId(userId);
+		
+		String flag;
+		if(userDTO!=null) {
+			flag="duplicated";//중복
+		}else {
+			flag="notDuplicated";//중복 아님
+		}
+		
+		return flag;
 	}
 
 }

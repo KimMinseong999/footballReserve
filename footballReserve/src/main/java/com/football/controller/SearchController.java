@@ -42,34 +42,29 @@ public class SearchController {
 	@ResponseBody
 	@RequestMapping("/selectFutsalList")
 	public Map<String,Object> selectFutsalList(HttpServletRequest request,SearchFilterDTO searchFilterDTO){
-		System.out.println(searchFilterDTO.getSido());
-		System.out.println(searchFilterDTO.getGugun());
-		System.out.println(searchFilterDTO.getFutsalStart());
-		System.out.println(searchFilterDTO.getFutsalEnd());
-		System.out.println(searchFilterDTO.getFutsalMaxUser());
+		
+		System.out.println(searchFilterDTO.getFutsalAddr());
+		System.out.println("최대 사용자 숫자 : "+searchFilterDTO.getFutsalMaxUser());
+		System.out.println("시작 날짜 : " + searchFilterDTO.getFutsalStart());
+		System.out.println("종료 날짜 : " + searchFilterDTO.getFutsalEnd());
 		
 		int currentPageNo = 1;
-		int maxPost = 5;
+		int maxPost = 10;
 		if (request.getParameter("pages") != null)
 			currentPageNo = Integer.parseInt(request.getParameter("pages"));
 		Paging paging = new Paging(currentPageNo, maxPost);
 		int offset = (paging.getCurrentPageNo() - 1) * paging.getmaxPost();
 		
 		List<FutsalDTO> futsalList = new ArrayList<>();
-/*		futsalList = futsalService.selectFutsalListPage(offset, paging.getmaxPost());*/
 		futsalList = searchService.selectFutsalList(searchFilterDTO,offset,paging.getmaxPost());
 
 		paging.setNumberOfRecords(futsalService.selectFutsalCount());
 		paging.makePaging();
-		
+
 		Map<String,Object> map = new HashMap<>();
 		map.put("futsalList", futsalList);
 		map.put("paging", paging);
-		for(FutsalDTO futsal:futsalList) {
-			System.out.println(futsal.getFutsalAddr() + "==  주소");
-			System.out.println(futsal.getFutsalSub() + "  == 제목");
-			
-		}
+
 
 		return map;
 	}

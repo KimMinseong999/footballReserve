@@ -1,12 +1,12 @@
-package com.football.model.user.service;
+package com.football.model.sign.service;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.football.model.user.dao.SignDAO;
-import com.football.model.user.dto.UserDTO;
+import com.football.model.sign.dao.SignDAO;
+import com.football.model.sign.dto.UserDTO;
 
 @Service
 public class SignServiceImpl implements SignService{
@@ -29,5 +29,10 @@ public class SignServiceImpl implements SignService{
 		session.setAttribute("userAuthority", userDTO.getUserAuthority());
 		}
 		return userDTO;
+	}
+
+	@Override
+	public UserDTO checkId(String userId) {		
+		return signDAO.checkId(userId);
 	}	
 }

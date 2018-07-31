@@ -1,4 +1,4 @@
-package com.football.model.user.dto;
+package com.football.model.sign.dto;
 
 import java.util.List;
 

@@ -16,7 +16,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.football.model.user.dto.UserDTO;
+import com.football.model.sign.dto.UserDTO;
 
 public class KakaoLogin {
 	public static JsonNode getAccessToken(String autorize_code) {

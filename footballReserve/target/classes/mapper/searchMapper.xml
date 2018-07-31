@@ -64,10 +64,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectFutsalListPage" parameterType="map" resultMap="futsalDTO">
+	
 		select * from fb_tb natural join fb_facilities_tb natural join fb_rental_tb
 		natural join fb_pph_tb
-		natural join fb_image_tb where fb_no>0 order by fb_no desc LIMIT #{offset},
-		#{noOfRecords}
+		natural join fb_image_tb
+		where fb_no>0 
+		order by fb_no desc LIMIT #{offset},#{noOfRecords}
+		
 	</select>
 
 </mapper>

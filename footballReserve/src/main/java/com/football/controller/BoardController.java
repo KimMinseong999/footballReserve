@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -116,25 +117,34 @@ public class BoardController {
 	}
 
 	@RequestMapping("/insert/{boardType}")
-	public ModelAndView insertBoard(BoardDTO boardDTO) {
+	public ModelAndView insertBoard(HttpSession session, BoardDTO boardDTO) {
 		ModelAndView mv = new ModelAndView();
-		boardService.insertBoard(boardDTO);
-		mv.setViewName("redirect:/board/list/" + boardDTO.getBoardType());
-		return mv;
+		if(boardDTO.getUserId()!=session.getAttribute("userId")) {
+			mv.setViewName("/insertForm/"+boardDTO.getBoardType());
+			return mv;
+		}else {
+			boardService.insertBoard(boardDTO);
+			mv.setViewName("redirect:/board/list/" + boardDTO.getBoardType());
+			return mv;
+		}
 	}
 
 	@RequestMapping("/insertBoardReview")
-	public ModelAndView insertBoardReview(ReviewDTO reviewDTO) {
+	public ModelAndView insertBoardReview(HttpSession session, ReviewDTO reviewDTO) {
 		ModelAndView mv = new ModelAndView();
+		if(reviewDTO.getReviewContent().trim() != "") {
 		boardService.insertBoardReview(reviewDTO);
+		}
 		mv.setViewName("redirect:/board/detail/" + reviewDTO.getBoardType() + "/" + reviewDTO.getBoardNo());
 		return mv;
 	}
 
 	@RequestMapping("/insertBoardReview/{reviewOriginNo}")
-	public ModelAndView insertBoardReview(ReviewDTO reviewDTO, @PathVariable int reviewOriginNo) {
+	public ModelAndView insertBoardReview(HttpSession session , ReviewDTO reviewDTO, @PathVariable int reviewOriginNo) {
 		ModelAndView mv = new ModelAndView();
-		boardService.insertBoardReview(reviewDTO, reviewOriginNo);
+		if(reviewDTO.getReviewContent().trim() != "") {
+			boardService.insertBoardReview(reviewDTO, reviewOriginNo);
+		}
 		mv.setViewName("redirect:/board/detail/" + reviewDTO.getBoardType() + "/" + reviewDTO.getBoardNo());
 		return mv;
 	}
@@ -145,7 +155,5 @@ public class BoardController {
 		boardService.deleteBoardReview(reviewNo);
 		mv.setViewName("redirect:/board/detail/" + boardType + "/" + boardNo);
 		return mv;
-
 	}
-
 }

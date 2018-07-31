@@ -32,21 +32,15 @@ public class SearchDAOImpl implements SearchDAO{
 	@Override
 	public List<FutsalDTO> selectFutsalList(SearchFilterDTO searchFilterDTO, int offset, int noOfRecords) {
 		
-		
 		List<FutsalDTO> futsalList = new ArrayList<FutsalDTO>();
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", offset);
 		map.put("noOfRecords", noOfRecords);
 		map.put("searchFilterDTO", searchFilterDTO);
-		System.out.println(offset);
-		System.out.println(noOfRecords);
-		
+
 		futsalList = session.selectList("searchMapper.selectFutsalListPage", map);
 		this.noOfRecords = session.selectOne("futsalMapper.selectFutsalCount");
-		
-		
-		
-		
+	
 		return futsalList;
 	}
 }

@@ -1,11 +1,13 @@
-package com.football.model.user.dao;
+package com.football.model.sign.dao;
 
-import com.football.model.user.dto.UserDTO;
+import com.football.model.sign.dto.UserDTO;
 
 public interface SignDAO {
 
 	public void registUser(UserDTO userDTO);
 
 	public UserDTO loginUser(String userId, String userPwd);
+
+	public UserDTO checkId(String userId);
 	
 }
