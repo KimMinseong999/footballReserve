@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.football.model.futsal.dto.FutsalDTO;
+import com.football.model.futsal.dto.FutsalPPHDTO;
+import com.football.model.futsal.dto.FutsalReserveDTO;
 import com.football.model.search.dto.SearchFilterDTO;
 
 @Repository
@@ -42,5 +44,14 @@ public class SearchDAOImpl implements SearchDAO{
 		this.noOfRecords = session.selectOne("futsalMapper.selectFutsalCount");
 	
 		return futsalList;
+	}
+
+	@Override
+	public List<FutsalReserveDTO> selectReserveTime(String date, int futsalNo) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("date", date);
+		map.put("futsalNo", futsalNo);
+		
+		return session.selectList("searchMapper.selectReserveTime", map);
 	}
 }

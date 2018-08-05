@@ -84,4 +84,9 @@ public class FutsalServiceImpl implements FutsalService {
 	public FutsalDTO selectFutsalOne(int futsalNo) {
 		return futsalDAO.selectFutsalOne(futsalNo);
 	}
+
+	@Override
+	public void insertFutsalReserve(String date, String hh, int futsalNo, String loginId) {
+		futsalDAO.insertFutsalReserve(date,hh,futsalNo,loginId);
+	}
 }

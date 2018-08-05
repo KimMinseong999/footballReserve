@@ -1,4 +1,4 @@
-package com.football.model.futsal.service;
+package com.football.model.search.service;
 
 import java.util.List;
 
@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.football.model.futsal.dto.FutsalDTO;
+import com.football.model.futsal.dto.FutsalPPHDTO;
+import com.football.model.futsal.dto.FutsalReserveDTO;
 import com.football.model.search.dto.SearchFilterDTO;
 import com.football.model.serach.dao.SearchDAO;
 
@@ -30,4 +32,8 @@ public class SearchServiceImpl implements SearchService{
 		return searchDAO.selectFutsalList(searchFilterDTO, offset, noOfRecords);
 	}
 
+	@Override
+	public List<FutsalReserveDTO> selectReserveTime(String date, int futsalNo) {
+		return searchDAO.selectReserveTime(date, futsalNo);
+	}
 }

@@ -74,12 +74,12 @@ public class SignController {
 		JsonNode token = KakaoLogin.getAccessToken(code);
 		JsonNode profile = KakaoLogin.getKakaoUserInfo(token.path("access_token").toString());
 		UserDTO vo = KakaoLogin.changeData(profile);
-
+		System.out.println(vo.getUserName());
 		HttpSession session = request.getSession();
 		session.setAttribute("snsLogin", vo);
+		System.out.println(vo.getUserId()+"3");
 
-		System.out.println(vo.getUserId());
-		session.setAttribute("userId", vo.getUserId());
+		session.setAttribute("userId", "kakaoLoginUser"+vo.getUserId()+vo.getUserName());
 		session.setAttribute("userName", vo.getUserName());
 		session.setAttribute("userAuthority", 1);
 		

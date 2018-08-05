@@ -7,15 +7,17 @@ public class SearchFilterDTO {
 	private String futsalStart;
 	private String futsalEnd;
 	private String futsalAddr;
+	private int futsalPrice;
 	
 	public SearchFilterDTO() {}
-	public SearchFilterDTO(String sido, String gugun, int futsalMaxUser, String futsalStart, String futsalEnd, String futsalAddr) {
+	public SearchFilterDTO(String sido, String gugun, int futsalMaxUser, String futsalStart, String futsalEnd, String futsalAddr, int futsalPrice) {
 		this.sido = sido;
 		this.gugun = gugun;
 		this.futsalMaxUser = futsalMaxUser;
 		this.futsalStart = futsalStart;
 		this.futsalEnd = futsalEnd;
 		this.futsalAddr = futsalAddr;
+		this.futsalPrice = futsalPrice;
 	}
 	
 	public String getSido() {
@@ -54,5 +56,11 @@ public class SearchFilterDTO {
 	}
 	public void setFutsalAddr(String futsalAddr) {
 		this.futsalAddr = futsalAddr;
+	}
+	public int getFutsalPrice() {
+		return futsalPrice;
+	}
+	public void setFutsalPrice(int futsalPrice) {
+		this.futsalPrice = futsalPrice;
 	}
 }

@@ -166,9 +166,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectFutsalOne" parameterType="int" resultMap="futsalDTO">
-		select * from fb_tb natural join fb_facilities_tb natural join fb_rental_tb
+		select * from fb_tb natural join fb_facilities_tb 
+		natural join fb_rental_tb
 		natural join fb_pph_tb
-		natural join fb_image_tb where fb_no=#{futsalNo}
+		natural join fb_image_tb
+		where fb_no=#{futsalNo}
 	</select>
 
+	<insert id="insertFutsalReserve" parameterType="map">
+		insert into fb_reserve_tb(user_id,fb_no,re_start,re_end,re_status) values(#{loginId},#{futsalNo},#{reserveStart},#{reserveEnd},'1')
+	</insert>
 </mapper>

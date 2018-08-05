@@ -21,4 +21,6 @@ public interface FutsalService {
 
 	FutsalDTO selectFutsalOne(int futsalNo);
 
+	void insertFutsalReserve(String date, String hh, int futsalNo, String loginId);
+
 }

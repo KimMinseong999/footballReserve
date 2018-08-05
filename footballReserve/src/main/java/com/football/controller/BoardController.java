@@ -98,7 +98,8 @@ public class BoardController {
 	}
 
 	@RequestMapping("/detail/{boardType}/{boardNo}")
-	public ModelAndView boardDetail(@PathVariable String boardType, @PathVariable int boardNo, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView boardDetail(@PathVariable String boardType, @PathVariable int boardNo,
+			HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		BoardDTO boardDTO = boardService.selectBoardOne(boardType, boardNo, request, response);
 		List<ReviewDTO> reviewList = boardService.selectReviewList(boardType, boardNo);
@@ -119,38 +120,41 @@ public class BoardController {
 	@RequestMapping("/insert/{boardType}")
 	public ModelAndView insertBoard(HttpSession session, BoardDTO boardDTO) {
 		ModelAndView mv = new ModelAndView();
-		if(boardDTO.getUserId()!=session.getAttribute("userId")) {
-			mv.setViewName("/insertForm/"+boardDTO.getBoardType());
-			return mv;
-		}else {
+		System.out.println(boardDTO.getUserId());
+		System.out.println(session.getAttribute("userId"));
+		if (!boardDTO.getUserId().equals(session.getAttribute("userId")) || boardDTO.getBoardSub() == null
+				|| boardDTO.getBoardContent() == null || boardDTO.getUserId() == null) {
+			mv.setViewName("redirect:/board/insertForm/" + boardDTO.getBoardType());
+		} else {
 			boardService.insertBoard(boardDTO);
 			mv.setViewName("redirect:/board/list/" + boardDTO.getBoardType());
-			return mv;
 		}
+		return mv;
 	}
 
 	@RequestMapping("/insertBoardReview")
 	public ModelAndView insertBoardReview(HttpSession session, ReviewDTO reviewDTO) {
 		ModelAndView mv = new ModelAndView();
-		if(reviewDTO.getReviewContent().trim() != "") {
-		boardService.insertBoardReview(reviewDTO);
+		if (reviewDTO.getReviewContent().trim() != "") {
+			boardService.insertBoardReview(reviewDTO);
 		}
 		mv.setViewName("redirect:/board/detail/" + reviewDTO.getBoardType() + "/" + reviewDTO.getBoardNo());
 		return mv;
 	}
 
 	@RequestMapping("/insertBoardReview/{reviewOriginNo}")
-	public ModelAndView insertBoardReview(HttpSession session , ReviewDTO reviewDTO, @PathVariable int reviewOriginNo) {
+	public ModelAndView insertBoardReview(HttpSession session, ReviewDTO reviewDTO, @PathVariable int reviewOriginNo) {
 		ModelAndView mv = new ModelAndView();
-		if(reviewDTO.getReviewContent().trim() != "") {
+		if (reviewDTO.getReviewContent().trim() != "") {
 			boardService.insertBoardReview(reviewDTO, reviewOriginNo);
 		}
 		mv.setViewName("redirect:/board/detail/" + reviewDTO.getBoardType() + "/" + reviewDTO.getBoardNo());
 		return mv;
 	}
-	
+
 	@RequestMapping("/delteBoardReview/{boardType}/{boardNo}/{reviewNo}")
-	public ModelAndView delteBoardReview(@PathVariable String boardType, @PathVariable int boardNo, @PathVariable int reviewNo) {
+	public ModelAndView delteBoardReview(@PathVariable String boardType, @PathVariable int boardNo,
+			@PathVariable int reviewNo) {
 		ModelAndView mv = new ModelAndView();
 		boardService.deleteBoardReview(reviewNo);
 		mv.setViewName("redirect:/board/detail/" + boardType + "/" + boardNo);

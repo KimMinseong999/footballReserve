@@ -76,4 +76,20 @@ public class FutsalDAOImpl implements FutsalDAO {
 		return session.selectOne("futsalMapper.selectFutsalOne", futsalNo);
 	}
 
+	@Override
+	public void insertFutsalReserve(String date, String hh, int futsalNo, String loginId) {
+		Map<String, Object> map = new HashMap<>();
+		if(Integer.parseInt(hh)<10) {
+			hh="0"+hh;
+		}
+		
+		map.put("reserveStart", date+" "+hh);
+		hh=""+(Integer.parseInt(hh)+1);
+		map.put("reserveEnd", date+" "+hh);
+		map.put("futsalNo", futsalNo);
+		map.put("loginId", loginId);
+		
+		session.insert("futsalMapper.insertFutsalReserve",map);
+	}
+
 }

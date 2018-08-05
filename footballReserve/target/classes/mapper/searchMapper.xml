@@ -55,6 +55,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</collection>
 	</resultMap>
 	
+	<resultMap type="futsalPPHDTO" id="futsalPPHDTO">
+		<id column="fb_no" property="futsalNo"/>
+		<result column="fb_price" property="futsalPrice"/>
+		<result column="fb_start" property="futsalStart" />
+		<result column="fb_end" property="futsalEnd" />
+	</resultMap>
+	
+	<resultMap type="futsalReserveDTO" id="futsalReserveDTO">
+		<id column="RE_NO" property="reserveNo"></id>
+		<result column="user_id" property="userId"></result>
+		<result column="fb_no" property="fustalNo"></result>
+		<result column="re_start" property="reserveStart"></result>
+		<result column="re_end" property="reserveEnd"></result>
+		<result column="re_status" property="reserveStatus"></result>	
+	</resultMap>
+	
 	<select id="selectSidoList" resultType="string">
 		select distinct(sido) from address_tb
 	</select>
@@ -68,9 +84,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from fb_tb natural join fb_facilities_tb natural join fb_rental_tb
 		natural join fb_pph_tb
 		natural join fb_image_tb
-		where fb_no>0 
+		<where> fb_no>0
+		<choose>
+			<when test="searchFilterDTO.futsalAddr!=null">
+				and fb_addr like CONCAT('%', #{searchFilterDTO.futsalAddr},'%')
+			</when>
+		</choose>
+		<choose>
+			<when test="searchFilterDTO.futsalMaxUser==2">
+				and fb_maxUser = 2
+			</when>
+			<when test="searchFilterDTO.futsalMaxUser==4">
+				and fb_maxUser = 4
+			</when>
+			<when test="searchFilterDTO.futsalMaxUser>=6">
+				and fb_maxUser >=6
+			</when>
+		</choose>
+			<choose>
+			<when test="searchFilterDTO.futsalPrice==15000">
+				and fb_price >= #{searchFilterDTO.futsalPrice}
+			</when>
+			<when test="searchFilterDTO.futsalPrice==10000">
+				and fb_price >= #{searchFilterDTO.futsalPrice} and 15000 >= fb_price
+			</when>
+			<when test="searchFilterDTO.futsalPrice==5000">
+				and fb_price >= #{searchFilterDTO.futsalPrice} and 10000 >= fb_price
+			</when>
+			<when test="searchFilterDTO.futsalPrice==1000">
+				and fb_price >= #{searchFilterDTO.futsalPrice} and 5000 >= fb_price
+			</when>
+			</choose>
+		</where>
 		order by fb_no desc LIMIT #{offset},#{noOfRecords}
-		
+	</select>
+	
+	<select id="selectReserveTime" parameterType="map" resultMap="futsalReserveDTO">
+		select * from FB_RESERVE_TB where fb_no=#{futsalNo} and re_start =#{date}
 	</select>
 
 </mapper>
